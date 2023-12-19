@@ -1,5 +1,8 @@
-<h1 align="center">AnythingTo3D Research</h1>
+<p>
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=36&duration=1500&pause=1000&random=true&width=435&height=60&lines=AnythingTo3D%F0%9F%93%88" height="100">
+</p>
 
+# AnythingTo3D Research
 
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/matteturtle09/point-e-research?style=flat-square)
 ![GitHub Repo stars](https://img.shields.io/github/stars/matteturtle09/point-e-research?style=flat-square)
