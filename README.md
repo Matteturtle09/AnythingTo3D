@@ -1,4 +1,4 @@
-# point-e-research
+# AnythingTo3D Research
 ![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/m/matteturtle09/point-e-research)
 ![GitHub Repo stars](https://img.shields.io/github/stars/matteturtle09/point-e-research)
 ![GitHub contributors](https://img.shields.io/github/contributors/matteturtle09/point-e-research)
