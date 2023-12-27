@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <Navbar userName={"Username"} title={"Anything to 3D"} avatarUrl={"https://api.dicebear.com/7.x/notionists-neutral/svg?seed=Berrystatus.org"}/>
+        <Navbar isLoggedIn={true} userName={"Username"} title={"Anything to 3D"} avatarUrl={"https://api.dicebear.com/7.x/notionists-neutral/svg?seed=Berrystatus.org"}/>
         {children}
       </body>
     </html>
