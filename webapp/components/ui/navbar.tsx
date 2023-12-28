@@ -1,11 +1,13 @@
+"use client";
 import React, { FC } from 'react';
-
+import Link from 'next/link';
 interface NavbarProps {
     title: string;
     avatarUrl: string;
     userName: string;
     isLoggedIn: boolean;
 }
+
 
 const Navbar: FC<NavbarProps> = ({ title, avatarUrl, userName, isLoggedIn }) => {
     return (
@@ -27,12 +29,7 @@ const Navbar: FC<NavbarProps> = ({ title, avatarUrl, userName, isLoggedIn }) => 
                                     </div>
                                 </div>
                                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100/30 backdrop-blur-sm rounded-box w-52">
-                                    <li className='rounded-lg hover:text-white hover:bg-primary/30 hover:backdrop-blur-sm'>
-                                        <a>
-                                            Profile
-                                        </a>
-                                    </li>
-                                    <li className='rounded-lg hover:text-white hover:bg-primary/30 hover:backdrop-blur-sm'><a>Settings</a></li>
+                                    <li className='rounded-lg hover:text-white hover:bg-primary/30 hover:backdrop-blur-sm'><Link href={"/generate"} legacyBehavior><a>Generate</a></Link></li>
                                     <li className='rounded-lg hover:text-white hover:bg-primary/30 hover:backdrop-blur-sm'><a>Logout</a></li>
                                 </ul>
                             </div>
