@@ -3,22 +3,25 @@ import React, { FC, useState, useEffect } from "react";
 import { PLYLoader } from "three-stdlib";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from 'three'
-import { OrbitControls } from "@react-three/drei";
+import { Box, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { XRButton, XR, Controllers, Hands } from '@react-three/xr'
 
-interface ModelViewerProps { }
+interface ModelViewerProps {
+    modelUrl :  string;
+}
 
-const ModelViewer: FC<ModelViewerProps> = () => {
+const ModelViewer: FC<ModelViewerProps> = ({modelUrl}) => {
     const [plyObject, setPlyObject] = useState<THREE.Mesh | null>(null);
 
     useEffect(() => {
         const loader = new PLYLoader();
         loader.load(
-            'mesh_1.ply',
+            modelUrl,
             function (geometry) {
+                console.log(modelUrl)
                 geometry.computeVertexNormals();
-                const material = new THREE.PointsMaterial({ size: 0.01, vertexColors: true });
-                const mesh = new THREE.Mesh(geometry, material);
+                const material = new THREE.PointsMaterial({ size: 0.01,  vertexColors: true });
+                const mesh = new THREE.Mesh(geometry, material)
                 mesh.rotateX(-Math.PI / 2);
                 setPlyObject(mesh);
             },
@@ -32,9 +35,9 @@ const ModelViewer: FC<ModelViewerProps> = () => {
     }, []);
 
     return (
-        <div className="w-full h-screen">
-            <XRButton mode="AR" />
-            <Canvas>
+        <div className="w-full h-full">
+            {/*<XRButton mode="AR" />*/}
+            <Canvas className="border border-slate-300 rounded-lg">
             <XR>
                 <ambientLight />
                 <OrbitControls></OrbitControls>
