@@ -16,7 +16,7 @@ const GenerationForm: FC<generationFormProps> = ({ }) => {
         try {
             console.log(data)
             const prompt = data.prompt
-            const baseUrl = 'https://cartridge-mortgages-aluminum-az.trycloudflare.com';
+            const baseUrl = data.baseUrl || 'bella bro';
             const startRes = await fetch(`${baseUrl}/api/shap-e/text-to-3d/start?prompt=${prompt}`, { headers: { "ngrok-skip-browser-warning": "a" } });
             const startData = await startRes.json();
             const reqid = startData.reqid;
@@ -42,7 +42,7 @@ const GenerationForm: FC<generationFormProps> = ({ }) => {
     }
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = async(data) => {await fetchApi(data)}
+    const onSubmit = async (data) => { await fetchApi(data) }
 
 
     return (
@@ -60,37 +60,64 @@ const GenerationForm: FC<generationFormProps> = ({ }) => {
                         >
                             <option>SHAP-E text to 3D</option>
                         </select>
+                        <div className="collapse border rounded-lg border-slate-300/20 border-2 mb-4">
+                            <input type="checkbox" />
+                            <div className="collapse-title text-md">
+                                Advanced Options
+                            </div>
+                            <div className="collapse-content">
+                                <input
+                                    className="textarea join-item mb-4"
+                                    placeholder="Your server url"
+                                    {...register("baseUrl")}
+                                ></input>
+                                <a target="_blank" href="https://colab.research.google.com/drive/17Axr5cUswVyUVMVCl81u5jlHiT4fE8lM">
+                                    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab" />
+                                </a>
+                                <p className="text-sm md:text-md mt-2">Start your free server</p>
+                            </div>
+                        </div>
                         <div className="join flex">
                             <input
                                 className="textarea join-item mb-4"
                                 placeholder="Your Prompt"
                                 {...register("prompt")}
                             ></input>
+
                             <button className="btn btn-primary join-item">GENERATE</button>
 
                         </div>
-                        
+
+
                     </form>
                     {resultData?.status === "success" &&
-                            <div role="alert" className="alert alert-success w-3/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                <span>Your model has been generated with success!</span>
-                            </div>
-                        }
-                        <div className="mt-3 grid grid-cols-1 md:cols-2 gap-2">
+                        <div role="alert" className="alert alert-success w-3/4">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span>Your model has been generated with success!</span>
+                        </div>
+                    }
+                    <div className="mt-3 grid grid-cols-1 md:cols-2 gap-2">
                         {resultData?.ply_files && resultData.ply_files.map((file) => (
                             <div key={file} className="">
                                 <ModelViewer key={file} modelUrl={file} />
+                                <a
+                                    href={file}
+                                    download={file}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <button className="btn btn-primaty">Download file</button>
+                                </a>
                             </div>
                         ))}
+                    </div>
+                    {resultData?.status === "processing" &&
+                        <div role="alert" className="alert alert-info w-3/4">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span>Processing {((resultData.files.length / 4) * 100).toFixed(0)}%</span>
                         </div>
-                        {resultData?.status === "processing" &&
-                            <div role="alert" className="alert alert-info w-3/4">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                <span>Processing {((resultData.files.length / 4) * 100).toFixed(0)}%</span>
-                            </div>
 
-                        }
+                    }
                 </div>
             </div>
         </>
