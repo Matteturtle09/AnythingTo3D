@@ -1,0 +1,31 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Docker
+      uses: docker/setup-docker@v2
+      with:
+        dockerfile: Dockerfile
+        container_name: my_container
+
+    - name: Build Docker Image
+      run: docker build -t my_docker_image:latest .
+
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Push Docker Image
+      run: |
+        docker tag my_docker_image:latest ${{ secrets.DOCKER_USERNAME }}/anythingto3dui:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/anythingto3dui:latest
